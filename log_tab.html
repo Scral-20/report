@@ -1,0 +1,167 @@
+<div class="row">
+    <div class="col-lg-12">
+        <!--在这里拉 Table(Log) URL-->
+
+        <!--<table-diagram url="/report/template/{{key}}/" localtitle="" current-period="{{currentPeriod}}"></table-diagram>-->
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Custom responsive table </h5>
+
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-5 m-b-xs"><select class="input-sm form-control input-s-sm inline">
+                            <option value="0">Option 1</option>
+                            <option value="1">Option 2</option>
+                            <option value="2">Option 3</option>
+                            <option value="3">Option 4</option>
+                        </select>
+                        </div>
+                        <div class="col-sm-4 m-b-xs">
+                            <div data-toggle="buttons" class="btn-group">
+                                <label class="btn btn-sm btn-white"> <input type="radio" id="option1" name="options">
+                                    Day </label>
+                                <label class="btn btn-sm btn-white active"> <input type="radio" id="option2"
+                                                                                   name="options"> Week </label>
+                                <label class="btn btn-sm btn-white"> <input type="radio" id="option3" name="options">
+                                    Month </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group"><input type="text" placeholder="Search"
+                                                            class="input-sm form-control"> <span
+                                    class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> Go!</button> </span></div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th><input type="checkbox" ng-click="selectAll($event)" ng-checked="isSelectedAll()">
+                                </th>
+                                <th>Project</th>
+                                <th>Completed</th>
+                                <th>Task</th>
+                                <th>Level</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="log in logData">
+                                <td><input ng-model="check" type="checkbox" name="{{log.title}}"
+                                           ng-checked="isSelected(log.id)"
+                                           ng-click="updateSelection($event,log.id,log.logText.content)"></td>
+                                <!--<td><input icheck type="checkbox" ng-model="check"  name="{{log.title}}" ng-checked="isSelected(log.id)" ng-click="updateSelection($event,log.id)"></td>-->
+                                <td>{{log.title}}</td>
+                                <td>
+                                    <pie-chart data="log.pieChart.data" options="piechartOptions.options"></pie-chart>
+                                </td>
+                                <td>{{log.pieChart.ratio}}</td>
+                                <td><a href=""><i ng-class="setIconClass(log.level)"> {{log.level}}</i></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-10">
+        <!--在这里拉 Log图 URL-->
+        <log-diagram url="/report/template/{{key}}/" localtitle="" current-period="{{currentPeriod}}"></log-diagram>
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>关键日志 </h5>
+
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content animated fadeIn">
+                    <ul class="notes" ng-repeat="log in logData" ng-if="selected.includes(log.id)">
+                        <li>
+                            <div id="{{log.id}}">
+                                <small>date:{{date(log.logText.timestamp)}}</small>
+                                <h4>title:{{log.title}}</h4>
+                                <span ng-style="{'color': setLevelColor(log.level)}">level: {{log.level}}</span>
+                                <p>Content:{{log.logText.content}}</p>
+                                <a href=""><i ng-click="close(log.id,selected)" class="fa fa-trash-o "></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ibox-content">
+                    <ul class="note-control-nw">
+                        <li>
+                            <div>
+                                <small>{{date(localtimestamp)}}</small>
+                                <h4>Long established fact</h4>
+                                <p>{{selectedContent|json}}</p>
+                                <p>{{selectedTitle|json}}</p>
+                                <a href=""><i ng-click="" class="fa fa-trash-o "></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <small>5:20:11 4-04-2014</small>
+                                <h4>Contrary to popular belief</h4>
+
+                                <p>Hampden-Sydney College in Virginia, looked up one.</p>
+                                <a href=""><i class="fa fa-trash-o "></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <small>2:10:12 4-05-2014</small>
+                                <h4>There are many variations</h4>
+
+                                <p>All the Lorem Ipsum generators on the Internet .</p>
+                                <a href=""><i class="fa fa-trash-o "></i></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <small>10:15:26 6-04-2014</small>
+                                <h4>Ipsum used standard chunk of Lorem</h4>
+
+                                <p>Standard chunk is reproduced below for those.</p>
+                                <a href=""><i class="fa fa-trash-o "></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-2">
+        <div class="wrapper wrapper-content animated fadeInUp">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>复选框</h5>
+                    <div ibox-tools></div>
+                </div>
+                <div class="ibox-content">
+                    <div>Choose Tags</div>
+                    <div>
+                        <div>You have choosen:</div>
+                        <hr>
+                        <label ng-repeat="selectedTag in selectedTitle">
+                            [{{selectedTag}}]
+                        </label>
+                        <hr>
+
+                    </div>
+                    <pre>{{selectedContent|json}}</pre>
+                    <pre>{{selectedTitle|json}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <line2yaxis-diagram url="/report/trend/{{key}}/" localtitle="" current-period="{{currentPeriod}}"></line2yaxis-diagram>
+    </div>
+
+</div>
